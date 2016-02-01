@@ -12,29 +12,33 @@ var showList = [
 ];
 
 /*
-show 0 Mad Men
-show 1 Three Kings
-show 2 Three Musketeers
-show 3 Kings And Queens
+String matching tree example:
 
-word
-1 Mad
-2 Three
-3 Kings
-4 Men
-5 Musketeers
-6 And
-7 Queens
+Show info (array)
+0: Mad Men
+1: Three Kings
+2: Three Musketeers
+3: Kings And Queens
 
-Graph
-1 Mad: {4:4}
-2 Three: {3:5, 5:6}
-3 Kings: {6:7}
-4: {0:0}  Mad Men
-5: {0:1}  Three Kings
-6: {0:2}  Three Musketeers
+Word-to-integer dictionary
+1: Mad
+2: Three
+3: Kings
+4: Men
+5: Musketeers
+6: And
+7: Queens
+
+Graph nodes (the starting words have the same node ID as the starting word ID)
+(termination point at empty string key, leading to show info array index instead of next node ID)
+1 "Mad": {4:4}
+2 "Three": {3:5, 5:6}
+3 "Kings": {6:7}
+4: {"":0}  Mad Men
+5: {"":1}  Three Kings
+6: {"":2}  Three Musketeers
 7: {7:8}
-8: {0:3}  Kings and Queens
+8: {"":3}  Kings and Queens
 */
 
 var dict = {};
@@ -90,6 +94,8 @@ showList.forEach(function(showInfo, idx) {
 //console.log(JSON.stringify(dict, null, 1));
 //console.log(JSON.stringify(graph, null, 1));
 
+var seeitnowonnetflix = chrome.extension.getURL("images/seeitnowonnetflix.png");
+
 $(document).ready(function() {
   var textNodes = $("*:not(iframe)").contents().filter(function() {
     return this.nodeType === 3;
@@ -116,8 +122,11 @@ $(document).ready(function() {
             newText.push(preceding);
         }
         var showName = document.createElement("div");
-        showName.innerHTML = '<a href="' + showList[showId][1] + '">' + words.slice(i, j+1).join(" ") + ' (is on Netflix)</a>';
+        showName.innerHTML = '<u>' + words.slice(i, j+1).join(" ") + '</u>';
         newText.push(showName);
+        var showLink = document.createElement("div");
+        showLink.innerHTML = '<a href="' + showList[showId][1] + '"><img src="' + seeitnowonnetflix + '"/></a>';
+        newText.push(showLink);
         i = j+1;
         cutBegin = i;
       }

@@ -1,0 +1,12 @@
+{
+  "manifest_version": 2,
+  "name": "is-it-on-netflix",
+  "version": "0.1",
+  "description": "Scan the current webpage for shows available on Netflix and inject link next to the title",
+  "content_scripts": [{
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["jquery-1.12.0.min.js", "contentscript.js"]
+  }],
+  "permissions": ["activeTab"],
+  "web_accessible_resources": ["images/seeitnowonnetflix.png"]
+}
